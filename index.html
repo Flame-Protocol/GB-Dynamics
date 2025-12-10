@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GB Dynamics Inc. | Asset Verification</title>
+    <style>
+        :root {
+            --navy: #0d1b2a;
+            --navy-light: #1b2838;
+            --navy-dark: #060d14;
+            --gold: #b8960c;
+            --gold-light: #d4af37;
+            --white: #ffffff;
+            --gray: #8892a0;
+            --gray-light: #c5ccd6;
+            --gray-dark: #3d4654;
+            --green: #228b22;
+            --green-light: #2ea82e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--navy-dark);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+            border-bottom: 2px solid var(--gold);
+            padding: 20px 40px;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+        
+        .logo span { color: var(--gold); }
+        
+        .verified-badge {
+            background: var(--green);
+            color: var(--white);
+            padding: 8px 20px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .verified-badge::before {
+            content: "✓";
+            font-weight: bold;
+        }
+        
+        /* Main */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            color: var(--white);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            border-radius: 8px;
+            padding: 50px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(34, 139, 34, 0.3);
+        }
+        
+        .balance-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .balance-value {
+            font-size: 56px;
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .balance-text {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2px;
+        }
+        
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .info-card {
+            background: var(--navy-light);
+            border: 1px solid var(--gray-dark);
+            padding: 30px;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .info-card .value {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--white);
+            word-break: break-all;
+            background: var(--navy-dark);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .info-card a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+        
+        .info-card a::after {
+            content: "→";
+        }
+        
+        /* Verification Section */
+        .verification-section {
+            background: var(--navy);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .verification-section h2 {
+            color: var(--white);
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .verify-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-number {
+            background: var(--gold);
+            color: var(--navy);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+        
+        .step h4 {
+            color: var(--white);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .step p {
+            color: var(--gray);
+            font-size: 12px;
+        }
+        
+        .verify-button {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .verify-button:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(184, 150, 12, 0.3);
+        }
+        
+        /* Token Details */
+        .token-details {
+            background: var(--navy-light);
+            border: 1px solid var(--gray-dark);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .token-details h3 {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .token-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--navy);
+        }
+        
+        .token-item .label {
+            font-size: 10px;
+            color: var(--gray);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .token-item .data {
+            font-size: 14px;
+            color: var(--white);
+            font-weight: bold;
+        }
+        
+        /* Trust Comparison */
+        .trust-comparison {
+            background: var(--navy-light);
+            border: 1px solid var(--gray-dark);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .trust-comparison h3 {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th {
+            background: var(--navy);
+            color: var(--gold);
+            padding: 15px;
+            text-align: left;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray-dark);
+            font-size: 13px;
+        }
+        
+        .comparison-table .traditional { color: #cc6666; }
+        .comparison-table .blockchain { color: var(--green); font-weight: bold; }
+        
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: var(--navy);
+            border: 1px solid var(--gray-dark);
+            margin-bottom: 40px;
+        }
+        
+        .download-section h3 {
+            color: var(--white);
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--navy);
+            border-top: 2px solid var(--gold);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            color: var(--gold);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-tagline {
+            color: var(--gray);
+            font-style: italic;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 13px;
+        }
+        
+        .footer-links a:hover { color: var(--gold); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .verify-steps { grid-template-columns: 1fr; }
+            .token-grid { grid-template-columns: repeat(2, 1fr); }
+            .balance-value { font-size: 36px; }
+            .hero h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">GB <span>DYNAMICS</span> INC.</div>
+            <div class="verified-badge">Blockchain Verified</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Digital Asset Verification</h1>
+            <p>Cryptographically secured holdings on Ethereum Mainnet</p>
+        </section>
+
+        <div class="balance-card">
+            <div class="balance-label">Verified Balance</div>
+            <div class="balance-value">10,000,000,000 MG</div>
+            <div class="balance-text">TEN BILLION TOKENS</div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Wallet Address</h3>
+                <div class="value">0xa170de937dc784422369e58e2e64e232c326a218</div>
+                <a href="https://etherscan.io/address/0xa170de937dc784422369e58e2e64e232c326a218" target="_blank">View on Etherscan</a>
+            </div>
+            <div class="info-card">
+                <h3>Token Contract (FLAMEC)</h3>
+                <div class="value">0xCC8598B02BB753b0A557811a99622b33C73692cF</div>
+                <a href="https://etherscan.io/token/0xCC8598B02BB753b0A557811a99622b33C73692cF" target="_blank">View Contract</a>
+            </div>
+        </div>
+
+        <section class="verification-section">
+            <h2>Verify This Balance Yourself</h2>
+            <div class="verify-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Click Verify</h4>
+                    <p>Opens Etherscan blockchain explorer</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>View Balance</h4>
+                    <p>See live token balance on-chain</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Check History</h4>
+                    <p>Review complete transaction record</p>
+                </div>
+            </div>
+            <a href="https://etherscan.io/token/0xCC8598B02BB753b0A557811a99622b33C73692cF?a=0xa170de937dc784422369e58e2e64e232c326a218" target="_blank" class="verify-button">
+                VERIFY BALANCE ON ETHERSCAN
+            </a>
+        </section>
+
+        <div class="token-details">
+            <h3>Token Specifications</h3>
+            <div class="token-grid">
+                <div class="token-item">
+                    <div class="label">Token Name</div>
+                    <div class="data">FLAMEC (MG)</div>
+                </div>
+                <div class="token-item">
+                    <div class="label">Standard</div>
+                    <div class="data">ERC-20</div>
+                </div>
+                <div class="token-item">
+                    <div class="label">Decimals</div>
+                    <div class="data">6</div>
+                </div>
+                <div class="token-item">
+                    <div class="label">Network</div>
+                    <div class="data">Ethereum</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trust-comparison">
+            <h3>Blockchain vs. Traditional Verification</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Attribute</th>
+                    <th>Traditional Proof of Funds</th>
+                    <th>Blockchain Verification</th>
+                </tr>
+                <tr>
+                    <td>Verification Time</td>
+                    <td class="traditional">2-5 business days</td>
+                    <td class="blockchain">12 seconds</td>
+                </tr>
+                <tr>
+                    <td>Third Party Required</td>
+                    <td class="traditional">Yes (bank attestation)</td>
+                    <td class="blockchain">No (self-verify)</td>
+                </tr>
+                <tr>
+                    <td>Available</td>
+                    <td class="traditional">Business hours only</td>
+                    <td class="blockchain">24/7/365</td>
+                </tr>
+                <tr>
+                    <td>Can Be Forged</td>
+                    <td class="traditional">Yes (document fraud)</td>
+                    <td class="blockchain">Mathematically impossible</td>
+                </tr>
+                <tr>
+                    <td>Audit Trail</td>
+                    <td class="traditional">Request from bank</td>
+                    <td class="blockchain">Complete history on-chain</td>
+                </tr>
+                <tr>
+                    <td>Trust Model</td>
+                    <td class="traditional">"Trust the institution"</td>
+                    <td class="blockchain">"Verify the math"</td>
+                </tr>
+            </table>
+        </div>
+
+        <section class="download-section">
+            <h3>Download Proof of Funds Certificate</h3>
+            <a href="GB_Dynamics_Proof_of_Funds.pdf" class="download-btn" download>DOWNLOAD PDF</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">FLAME</div>
+        <div class="footer-tagline">Formal Ledger for Atomic & Mandatory Execution</div>
+        <div class="footer-links">
+            <a href="https://flameqmm.app">flameqmm.app</a>
+            <a href="mailto:integration@flameqmm.app">integration@flameqmm.app</a>
+        </div>
+    </footer>
+</body>
+</html>
